@@ -1,0 +1,43 @@
+<div class="action-buttons">
+  <button mat-raised-button (click)="onSetDefault()">Set Default</button>
+  <button mat-raised-button (click)="onToggleAll()">{{ allSelected ? 'Deselect' : 'Select' }} All</button>
+</div>
+<mat-accordion class="accordion-container" multi>
+  <mat-expansion-panel *ngFor="let permission of permissionsData">
+    <mat-expansion-panel-header class="accordion-header">
+      <mat-panel-title> {{ permission.name }} </mat-panel-title>
+      <mat-panel-description> Show all {{ permission.permissions.length }} Actions </mat-panel-description>
+      <span class="toggle" (click)="onToggle($event)">
+        <mat-slide-toggle
+          [(ngModel)]="permission.value"
+          [disabled]="permission.isDisable"
+          (change)="togglePermission(permission)"
+        />
+      </span>
+    </mat-expansion-panel-header>
+    <ng-container *ngFor="let subPermission of permission.permissions">
+      <div class="sub-permission" *ngIf="!subPermission.permissions">
+        <p class="sub-permission__name">{{ subPermission.name }}</p>
+        <mat-slide-toggle [(ngModel)]="subPermission.value" [disabled]="subPermission.isDisable" />
+      </div>
+      <mat-expansion-panel *ngIf="subPermission.permissions" class="sub-accordion mat-elevation-z">
+        <mat-expansion-panel-header class="accordion-header">
+          <mat-panel-title>{{ subPermission.name }}</mat-panel-title>
+          <span class="toggle" (click)="onToggle($event)">
+            <mat-slide-toggle
+              [(ngModel)]="subPermission.value"
+              [disabled]="subPermission.isDisable"
+              (change)="togglePermission(subPermission)"
+            />
+          </span>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let action of subPermission.permissions">
+          <div class="sub-permission" *ngIf="!action.permissions">
+            <p class="sub-permission__name">{{ action.name }}</p>
+            <mat-slide-toggle [(ngModel)]="action.value" [disabled]="action.isDisable" />
+          </div>
+        </ng-container>
+      </mat-expansion-panel>
+    </ng-container>
+  </mat-expansion-panel>
+</mat-accordion>
