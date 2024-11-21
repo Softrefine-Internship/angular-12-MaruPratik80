@@ -5,7 +5,7 @@ import { Permission, SubPermission } from './permission.model';
   providedIn: 'root',
 })
 export class PermissionService {
-  permissionDataDefaults: Permission[] = [
+  private permissionDataDefaults: Permission[] = [
     {
       name: 'Job',
       value: true,
@@ -145,13 +145,29 @@ export class PermissionService {
   ];
 
   permissionData!: Permission[];
+  allSelected = false;
 
   constructor() {
     this.permissionData = JSON.parse(JSON.stringify(this.permissionDataDefaults));
   }
 
+  hasPermission(name: string, permissions: (Permission | SubPermission)[] = this.permissionData): boolean {
+    const permission = permissions.find(permission => permission.name.toLowerCase() === name);
+    return permission ? permission.value : false;
+  }
+
   setDefault() {
     this.setDefaultValue(this.permissionData, this.permissionDataDefaults);
+  }
+
+  disableSubPermission(permissions: (Permission | SubPermission)[] = this.permissionData) {
+    permissions.forEach(permission => {
+      if (permission.isDisable && permission.permissions)
+        permission.permissions.forEach(subPermission => {
+          subPermission.isDisable = true;
+          if (subPermission.permissions) this.disableSubPermission(subPermission.permissions);
+        });
+    });
   }
 
   private setDefaultValue(

@@ -1,0 +1,16 @@
+.card {
+  height: 20rem;
+}
+
+.view-card {
+  @media only screen and (min-width: 37.5em) {
+    margin-left: auto;
+    width: 60%;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}

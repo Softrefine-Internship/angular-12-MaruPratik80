@@ -7,16 +7,30 @@ import { SettingsComponent } from './settings/settings.component';
 import { ReportsComponent } from './reports/reports.component';
 import { HireComponent } from './hire/hire.component';
 import { DepartmentComponent } from './department/department.component';
+import { PermissionGuard } from './permissions/permission.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/permissions', pathMatch: 'full' },
   { path: 'permissions', component: PermissionsComponent },
-  { path: 'job', component: JobComponent },
-  { path: 'candidate', component: CandidateComponent },
-  { path: 'settings', component: SettingsComponent },
-  { path: 'reports', component: ReportsComponent },
-  { path: 'hire', component: HireComponent },
-  { path: 'department', component: DepartmentComponent },
+  { path: 'job', component: JobComponent, canActivate: [PermissionGuard] },
+  {
+    path: 'candidate',
+    component: CandidateComponent,
+    canActivate: [PermissionGuard],
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    canActivate: [PermissionGuard],
+  },
+  { path: 'reports', component: ReportsComponent, canActivate: [PermissionGuard] },
+  { path: 'hire', component: HireComponent, canActivate: [PermissionGuard] },
+  {
+    path: 'department',
+    component: DepartmentComponent,
+    canActivate: [PermissionGuard],
+  },
+  { path: '**', redirectTo: '/permissions' },
 ];
 
 @NgModule({

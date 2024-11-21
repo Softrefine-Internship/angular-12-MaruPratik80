@@ -1,1 +1,29 @@
-<p>job works!</p>
+<mat-toolbar>
+  <span>{{ module.name }} Module</span>
+  <span class="spacer"></span>
+  <button mat-flat-button color="primary" *ngIf="permissions[0].value">
+    {{ permissions[0].name }}
+  </button>
+</mat-toolbar>
+<mat-divider />
+<div class="container">
+  <mat-card class="card" *ngFor="let item of permissions; let i = index">
+    <mat-card-header class="header">
+      <mat-card-title>{{ module.name }}-{{ i + 1 }}</mat-card-title>
+      <button mat-flat-button color="warn" *ngIf="permissions.at(-1)?.value">
+        {{ permissions.at(-1)?.name }}
+      </button>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-card class="view-card" *ngIf="permissions[1].value">
+        <mat-card-header class="header">
+          <mat-card-title>View</mat-card-title>
+        </mat-card-header>
+        <mat-card-actions class="actions">
+          <button mat-flat-button color="primary" *ngIf="subPermissions?.[0]?.value">Job Details</button>
+          <button mat-flat-button color="accent" *ngIf="subPermissions?.[1]?.value">Applicants</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>

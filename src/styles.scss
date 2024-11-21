@@ -10,3 +10,22 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
+.container {
+  padding: 1.6rem 2.4rem 6.4rem;
+  @media only screen and (max-width: 37.5em) {
+    padding: 1.2rem 1.6rem 3.2rem;
+  }
+}
+.spacer {
+  flex: 1 1 auto;
+}
+.card {
+  margin-bottom: 2rem;
+
+  .header {
+    margin-bottom: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

@@ -9,6 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 
 // import { Mat } from '@angular/material';
 
@@ -25,6 +26,7 @@ import { MatCardModule } from '@angular/material/card';
     MatExpansionModule,
     MatSlideToggleModule,
     MatCardModule,
+    MatDividerModule,
   ],
 })
 export class MaterialModule {}

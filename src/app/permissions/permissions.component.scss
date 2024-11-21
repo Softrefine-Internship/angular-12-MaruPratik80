@@ -1,5 +1,13 @@
-.accordion-container {
-  margin-bottom: 20rem;
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  margin-bottom: 1.6rem;
+
+  @media only screen and (max-width: 37.5em) {
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
 }
 
 .accordion-header {
@@ -16,10 +24,6 @@
   }
 }
 
-.sub-accordion {
-  margin-right: -2.4rem;
-}
-
 .sub-permission {
   box-sizing: border-box;
   height: 4.8rem;
@@ -31,4 +35,8 @@
   &__name {
     margin: 0;
   }
+}
+
+.sub-accordion {
+  margin-right: -2.4rem;
 }

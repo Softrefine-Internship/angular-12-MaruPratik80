@@ -6,45 +6,23 @@
 </mat-toolbar>
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #sidenav mode="side">
-    <mat-nav-list>
-      <mat-list-item routerLinkActive="active">
-        <a class="nav-link" routerLink="permissions" routerLinkActive="active-link">
-          <mat-icon>grading</mat-icon>Permissions
-        </a>
-      </mat-list-item>
-
-      <mat-list-item routerLinkActive="active">
-        <a class="nav-link" routerLink="job" routerLinkActive="active-link"><mat-icon>work</mat-icon>Job</a>
-      </mat-list-item>
-
-      <mat-list-item routerLinkActive="active">
-        <a class="nav-link" routerLink="candidate" routerLinkActive="active-link">
-          <mat-icon>person</mat-icon>Candidate
-        </a>
-      </mat-list-item>
-      <mat-list-item routerLinkActive="active">
-        <a class="nav-link" routerLink="settings" routerLinkActive="active-link">
-          <mat-icon>settings</mat-icon> Settings
-        </a>
-      </mat-list-item>
-      <mat-list-item routerLinkActive="active">
-        <a class="nav-link" routerLink="reports" routerLinkActive="active-link">
-          <mat-icon>book</mat-icon>Reports
-        </a>
-      </mat-list-item>
-      <mat-list-item routerLinkActive="active">
-        <a class="nav-link" routerLink="hire" routerLinkActive="active-link">
-          <mat-icon>handshake</mat-icon>Hire
-        </a>
-      </mat-list-item>
-      <mat-list-item routerLinkActive="active">
-        <a class="nav-link" routerLink="department" routerLinkActive="active-link">
-          <mat-icon>add_task</mat-icon>Department
-        </a>
-      </mat-list-item>
+    <mat-nav-list class="nav-list">
+      <ng-container *ngFor="let navLink of navLinks">
+        <mat-list-item routerLinkActive="active" *ngIf="hasPermission(navLink.link)">
+          <a
+            class="nav-link"
+            [routerLink]="navLink.link"
+            routerLinkActive="active-link"
+            (click)="onNavigate()"
+          >
+            <mat-icon>{{ navLink.icon }}</mat-icon
+            >{{ navLink.link | titlecase }}
+          </a>
+        </mat-list-item>
+      </ng-container>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content class="content">
+  <mat-sidenav-content>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
