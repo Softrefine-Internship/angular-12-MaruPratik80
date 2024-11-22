@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PermissionService } from './permission.service';
-import { MatAccordion } from '@angular/material/expansion';
 import { Permission, SubPermission } from './permission.model';
 
 @Component({
@@ -11,10 +10,6 @@ import { Permission, SubPermission } from './permission.model';
 export class PermissionsComponent implements OnInit {
   permissionsData!: Permission[];
   allSelected = false;
-
-  get isDesktop() {
-    return window.innerWidth > 600;
-  }
 
   constructor(private permissionService: PermissionService) {}
 
@@ -37,12 +32,12 @@ export class PermissionsComponent implements OnInit {
 
   onSetDefault() {
     this.permissionService.setDefault();
+    this.allSelected = this.permissionService.allSelected;
   }
 
   onToggleAll() {
     this.permissionService.allSelected = !this.permissionService.allSelected;
     this.allSelected = this.permissionService.allSelected;
-    // this.allSelected = !this.allSelected;
     this.permissionsData.forEach(permission => {
       if (!permission.isDisable) permission.value = this.allSelected;
       this.togglePermission(permission, this.allSelected);

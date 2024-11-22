@@ -157,6 +157,7 @@ export class PermissionService {
   }
 
   setDefault() {
+    this.allSelected = false;
     this.setDefaultValue(this.permissionData, this.permissionDataDefaults);
   }
 

@@ -8,12 +8,14 @@
     </button>
   </div>
   <mat-accordion multi>
-    <mat-expansion-panel *ngFor="let permission of permissionsData">
+    <mat-expansion-panel *ngFor="let permission of permissionsData" class="accordion">
       <mat-expansion-panel-header class="accordion-header">
-        <mat-panel-title> {{ permission.name }} </mat-panel-title>
-        <mat-panel-description *ngIf="isDesktop">
-          Show all {{ permission.permissions.length }} Actions
-        </mat-panel-description>
+        <div class="accordion-title">
+          <mat-panel-title> {{ permission.name }} </mat-panel-title>
+          <mat-panel-description>
+            Show all {{ permission.permissions.length }} Actions
+          </mat-panel-description>
+        </div>
         <span class="toggle" (click)="onToggle($event)">
           <mat-slide-toggle
             [(ngModel)]="permission.value"
@@ -27,9 +29,17 @@
           <p class="sub-permission__name">{{ subPermission.name }}</p>
           <mat-slide-toggle [(ngModel)]="subPermission.value" [disabled]="subPermission.isDisable" />
         </div>
-        <mat-expansion-panel *ngIf="subPermission.permissions" class="sub-accordion mat-elevation-z">
+        <mat-expansion-panel
+          *ngIf="subPermission.permissions"
+          class="accordion accordion--sub mat-elevation-z"
+        >
           <mat-expansion-panel-header class="accordion-header">
-            <mat-panel-title>{{ subPermission.name }}</mat-panel-title>
+            <div class="accordion-title">
+              <mat-panel-title>{{ subPermission.name }}</mat-panel-title>
+              <mat-panel-description>
+                Show all {{ subPermission.permissions.length }} Actions
+              </mat-panel-description>
+            </div>
             <span class="toggle" (click)="onToggle($event)">
               <mat-slide-toggle
                 [(ngModel)]="subPermission.value"

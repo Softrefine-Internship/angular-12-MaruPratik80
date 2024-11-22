@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Observable, Subscription } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Subscription } from 'rxjs';
 import { PermissionService } from './permissions/permission.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { PermissionService } from './permissions/permission.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav', { static: true }) sidenav!: MatSidenav;
-  resizeInterval!: any;
+  subscription!: Subscription;
 
   navLinks = [
     { link: 'permissions', icon: 'grading' },
@@ -23,14 +24,14 @@ export class AppComponent implements OnInit, OnDestroy {
     { link: 'department', icon: 'add_task' },
   ];
 
-  constructor(private permissionService: PermissionService) {}
+  constructor(private permissionService: PermissionService, private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
-    if (window.innerWidth > 600) this.sidenav.open();
-    else this.sidenav.close();
-    this.resizeInterval = setInterval(() => {
-      this.sidenav.mode = window.innerWidth > 600 ? 'side' : 'over';
-    }, 1000);
+    this.subscription = this.breakpointObserver.observe(['(max-width:50em)']).subscribe(result => {
+      this.sidenav.mode = result.matches ? 'over' : 'side';
+      if (result.matches) this.sidenav.close();
+      else this.sidenav.open();
+    });
   }
 
   hasPermission(name: string): boolean {
@@ -43,6 +44,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.resizeInterval);
+    this.subscription.unsubscribe();
   }
 }
